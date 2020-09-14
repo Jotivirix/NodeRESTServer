@@ -1,8 +1,10 @@
-require('../config/config');
+require('./config/config');
 
 const express = require("express");
+const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require("body-parser");
+const rutasUsuario = require('./routes/usuario_routes');
 
 
 // parse application/x-www-form-urlencoded
@@ -11,44 +13,29 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.get("/",(req,res) => {
-  res.json({
-    mensaje: "Bienvenido a la HOME"
-  })
-})
+app.use(rutasUsuario);
 
-app.get("/usuario", function (req, res) {
-  res.json("Usuarios");
+/*LOCALHOST*/
+/*
+mongoose.connect('mongodb://localhost:27017/cafe',(err, res) => {
+  if(err){
+    throw err;
+  }
+  else{
+    console.log('Base de datos ONLINE');
+  }
+});
+*/
+
+mongoose.connect('mongodb+srv://Jotivirix:Jota_121194@cluster0.b3djl.mongodb.net/cafe?retryWrites=true&w=majority',(err, res) => {
+  if(err){
+    throw err;
+  }
+  else{
+    console.log('Base de datos ONLINE');
+  }
 });
 
-app.post("/usuario", function (req, res) {
-  let body = req.body;
-
-    if(body.nombre === undefined){
-        res.status(400).json({
-            ok: false,
-            message: 'The name is needed'
-        });
-    }
-    else{
-        res.json({
-            persona: body
-        });
-    }
-
-});
-
-app.put("/usuario/:id", function (req, res) {
-  let id = req.params.id;
-  res.json({
-    message: "User to be updated",
-    id: id,
-  });
-});
-
-app.delete("/usuario", function (req, res) {
-  res.json("Borrar usuario");
-});
 
 app.listen(process.env.PORT, () => {
   console.log("Escuchando puerto", process.env.PORT);
