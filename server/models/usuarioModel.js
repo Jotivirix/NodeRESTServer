@@ -43,7 +43,7 @@ let usuarioSchema = new Schema({
     }
 });
 
-//Modificamos el metodo toJSON del Usuario
+//Modificamos el metodo toJSON del Usuario para que no salga la contraseña
 usuarioSchema.methods.toJSON = function () {
     let user = this;
     let userObject = user.toObject();
