@@ -22,6 +22,7 @@ mongoose.connect(process.env.URLDB,{useNewUrlParser:true, useCreateIndex: true},
   }
   else{
     console.log('Base de datos ONLINE');
+    console.log(process.env.URLDB);
   }
 });
 
