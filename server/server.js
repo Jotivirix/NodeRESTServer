@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(rutasUsuario);
 
 /*LOCALHOST*/
-mongoose.connect('mongodb+srv://Jotivirix:Jota_121194@cluster0.b3djl.mongodb.net/cafe?retryWrites=true&w=majority',{useNewUrlParser:true, useCreateIndex: true},(err, res) => {
+mongoose.connect(process.env.URLDB,{useNewUrlParser:true, useCreateIndex: true},(err, res) => {
   if(err){
     throw err;
   }
